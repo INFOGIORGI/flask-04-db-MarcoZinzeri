@@ -9,12 +9,16 @@ app.config['MYSQL_DB']="w3schools"
 app.config['MYSQL_USER']="ospite"
 app.config['MYSQL_PASSWORD']="ospite"
 
-cursor=mysql.connection.cursor()
-query='SELECT '
-cursor.execute(query)
+mysql = MySQL(app)
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def users():
+    #il cursore è un interfaccia che collega ai database
+    cur = mysql.connection.cursor()
+    query="select * from products "
+    cur.execute(query)
+    rv = cur.fetchall()
+    return str(rv)
 
-app.run()
+if __name__ == "__main__":
+app.run(debug=True)
